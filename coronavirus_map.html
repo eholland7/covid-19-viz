@@ -17,6 +17,11 @@
   fill-opacity: .35;
 }
 
+.bubbles-legend {
+  stroke: #900;
+  fill-opacity: 0;
+}
+
 .tip {
     position: absolute;
     padding: 5px;
@@ -34,11 +39,13 @@
 
 .title-text {
   font: 25px sans-serif;
+  font-weight: bold;
   color: dimgray;
 }
 
 .subtitle-text {
   font: 15px sans-serif;
+  font-weight: bold;
   color: dimgray;
 }
 
@@ -145,6 +152,42 @@ g.call(d3.axisBottom(x)
     .tickValues(color.domain()))
   .select(".domain")
     .remove();
+
+
+//legend -- for cases
+var bubbles_legend = svg.selectAll(".bubbles-legend")
+    .data([2000, 4000, 8000])
+    .enter().append("circle")
+    .attr("class", "bubbles-legend")
+    .attr("r", function(d) {
+      return Math.sqrt(d) / (Math.PI / 2.5);
+    })
+    .attr("transform", "translate(1140,500)")
+    .attr("cy", d => -(Math.sqrt(d) / (Math.PI / 2.5)));
+
+svg.append("text")
+      .attr("transform", "translate(1140,440)")
+      .attr("text-anchor", "middle")
+      .style("font", "10px sans-serif")
+      .attr("fill", "#900")
+      .text("2k");
+svg.append("text")
+      .attr("transform", "translate(1140,410)")
+      .attr("text-anchor", "middle")
+      .style("font", "10px sans-serif")
+      .attr("fill", "#900")
+      .text("4k");
+svg.append("text")
+      .attr("transform", "translate(1140,368)")
+      .attr("text-anchor", "middle")
+      .style("font", "10px sans-serif")
+      .attr("fill", "#900")
+      .text("8k");
+svg.append("text")
+      .attr("transform", "translate(1140,520)")
+      .attr("text-anchor", "middle")
+      .style("font", "10px sans-serif")
+      .text("Cases of COVID-19");
 
 // tooltip
 function strong(text) {
