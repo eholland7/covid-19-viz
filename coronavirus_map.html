@@ -230,16 +230,16 @@ function handleMouseOut(d) {
 
 //slider to view the data as it happened
 //set og value
-updateData(parseTime('2020-03-29'));
+updateData(parseTime('2020-03-30'));
 
 var dispatch = d3.dispatch("input", "statechange");
 var slider = d3.sliderRight()
     .min(parseTime("2020-01-21"))
-    .max(parseTime("2020-03-29"))
+    .max(parseTime("2020-03-30"))
     .height(400)
     .tickFormat(d3.timeFormat("%m-%d"))
     .tickValues(dates.forEach(element => parseTime(element)))
-    .default(parseTime("2020-03-29"))
+    .default(parseTime("2020-03-30"))
     .on("end", function(value) {
 
       updateData(value);
@@ -295,7 +295,7 @@ svg.append("text")
     .attr("y", 230)
     .attr("x", 1055)
     .attr("class", "avg-text")
-    .text("March 25th. Toggle the buttons");
+    .text("March 30th. Toggle the buttons");
 svg.append("text")
     .attr("text-anchor", "start")
     .attr("y", 245)
