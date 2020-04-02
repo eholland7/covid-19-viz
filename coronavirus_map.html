@@ -145,14 +145,24 @@ function strong(text) {
     return "<strong>" + text + "</strong>"
 }
 
+
 var tip = d3.tip()
     .attr("class", "tip")
     .offset([-5, 0])
     .html(function(d) {
-        var county = d.properties.name;
+        var county;
+        if (d.id === '36047') {
+          county = 'New York City';
+        } else if (d.id === "29047") {
+          county = 'Clay / Kansas City';
+        } else if (d.id === '17031') {
+          county = 'Cook / Chicago';
+        } else {
+          county = d.properties.name;
+        }
         var state = regionMap.get(+d.id);
-        var cases = covid_cases.get(d.id);
-        var deaths = covid_deaths.get(d.id);
+        var cases = covid_cases.get(at_date).get(d.id);
+        var deaths = covid_deaths.get(at_date).get(d.id);
         if (cases === undefined) {
              cases = 0;
         }
@@ -179,17 +189,16 @@ function handleMouseOut(d) {
     };
 
 //slider to view the data as it happened
-//set og value
 var at_date;
 
 var dispatch = d3.dispatch("input", "statechange");
 var slider = d3.sliderBottom()
     .min(parseTime("2020-01-21"))
-    .max(parseTime("2020-03-30"))
+    .max(parseTime("2020-04-01"))
     .width(550)
     .tickFormat(d3.timeFormat("%m-%d"))
     .tickValues(dates.forEach(element => parseTime(element)))
-    .default(parseTime("2020-03-30"))
+    .default(parseTime("2020-04-01"))
     .handle(
       d3
         .symbol()
@@ -250,6 +259,20 @@ function ready(data) {
       countyMap.set(d['fips'], d['county']);
   });
 
+  stats.forEach(function(item) {
+    if (item['fips'] === "") {
+      //its a random City
+      if (item['county'] === "New York City") {
+        //36047: KINGS COUNTY, FOR NYC
+        item['fips'] = "36047";
+      } else if (item['county'] === "Kansas City") {
+        console.log("HERE");
+        //29047: CLAY COUNTY, MO, FOR KANSAS CITY
+        item['fips'] = "29047";
+      }
+    }
+  });
+
   //get list of unique dates and fips
   datelist = [...new Set(stats.map(d=>d.date))];
   fipslist = [...new Set(stats.map(d=>d.fips))];
@@ -307,7 +330,7 @@ function init_graph() {
 }
 
 function redraw() {
-  
+
   d3.selectAll(".counties")
       .selectAll("path").transition().duration(50)
       .attr("fill", function(d) {
