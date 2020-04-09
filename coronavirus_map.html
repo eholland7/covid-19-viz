@@ -64,7 +64,7 @@ var stats, counties, datelist, fipslist;
 
 //legend -- for deaths
 var x = d3.scaleLinear()
-    .domain([1, 50])
+    .domain([1, 165])
     .rangeRound([325, 875]);
 
 var rangeGreys = ["#ffffff","#f0f0f0","#eaeaea","#d9d9d9","#c5c5c5","#bdbdbd", "#a9a9a9"
@@ -72,7 +72,7 @@ var rangeGreys = ["#ffffff","#f0f0f0","#eaeaea","#d9d9d9","#c5c5c5","#bdbdbd", "
       ,"#252525","#000000"];
 
 var color = d3.scaleThreshold()
-    .domain(d3.range(0, 50, 3))
+    .domain(d3.range(0, 165, 10))
     .range(rangeGreys);
 
 var g = svg.append("g")
@@ -191,32 +191,6 @@ function handleMouseOut(d) {
         .attr("stroke", "none")
     };
 
-//slider to view the data as it happened
-// var at_date;
-//
-// var dispatch = d3.dispatch("input", "statechange");
-// var slider = d3.sliderBottom()
-//     .min(parseTime("2020-01-21"))
-//     .max(parseTime("2020-04-01"))
-//     .width(550)
-//     .tickFormat(d3.timeFormat("%m-%d"))
-//     .tickValues(dates.forEach(element => parseTime(element)))
-//     .default(parseTime("2020-04-01"))
-//     .handle(
-//       d3
-//         .symbol()
-//         .type(d3.symbolCircle)
-//         .size(200)()
-//     )
-//     .on("end", function(value) {
-//       at_date = d3.timeFormat("%Y-%m-%d")(value);
-//       redraw();
-//     });
-//
-// svg.append("g")
-//     .call(slider)
-//     .attr("transform", "translate(300,20)");//"translate(770,160)");
-
 function checker(x) {
   return (x === undefined ? 0 : x);
 }
@@ -324,7 +298,7 @@ function ready(data) {
 
   svg.append("g")
       .call(slider)
-      .attr("transform", "translate(220,8)");
+      .attr("transform", "translate(260,10)");
 
   init_graph();
   redraw();

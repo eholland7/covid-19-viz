@@ -10,6 +10,7 @@
 
 .bubbles {
   stroke: #000;
+  stroke-width: 0.25;
   fill-opacity: .35;
 }
 
@@ -52,7 +53,7 @@
 
 .btn-holder {
   position: absolute;
-  top: 17%;
+  top: 15%;
   left: 80%;
   transform: translate(-50%, -50%);
 }
